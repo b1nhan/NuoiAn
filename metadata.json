@@ -1,0 +1,6 @@
+{
+  "name": "Nuôi An",
+  "description": "A personal donation project supporting An - a chill Vietnamese creator. Cool, playful, and friendly vibe.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
