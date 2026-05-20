@@ -14,7 +14,7 @@ export const NAVBAR = {
 };
 
 export const HERO = {
-  badge: "✨ Một dự án nhỏ, ý nghĩa lớn",
+  badge: "✨ Playground - just a playful project",
   heading1: "Nuôi An — Dự án nuôi sống",
   heading2: "một con người",
   subheading:
@@ -30,6 +30,9 @@ export const ABOUT = {
     "Thú thực, mình không bán khóa học, không bán sản phẩm, và cũng không gửi tin nhắn spam. Mình chỉ đang cố gắng xây dựng những thứ nhỏ bé nhưng tử tế cho thế giới này (hoặc ít nhất là cho mình).",
     "Nếu bạn cảm thấy những gì mình làm có chút giá trị, hoặc đơn giản là muốn thấy một con người được no bụng để tiếp tục gõ code, bạn có thể 'nuôi' mình bằng một ly cà phê. Không ép buộc, không áp lực, chỉ có lòng biết ơn vô hạn và những lời chúc tốt lành nhất gửi đến bạn.",
   ],
+  cardTitle: "An là ai?",
+  cardSubtitle:
+    "Một con người bằng xương bằng thịt, đang gõ code và mỉm cười với bạn.",
 };
 
 export const FEATURES = [
@@ -39,6 +42,7 @@ export const FEATURES = [
     description:
       "Năng lượng vàng để An tiếp tục duy trì sự sống và sự tỉnh táo.",
     classname: "md:col-span-1",
+    imagepath: "/12003/46977/738dc18d9f436d0a5502d5c55af70195.png",
   },
   {
     icon: Coffee,
@@ -46,6 +50,7 @@ export const FEATURES = [
     description:
       "Tăng tốc độ xử lý bug và ra mắt các tính năng mới nhanh hơn 300%.",
     classname: "md:col-span-2",
+    imagepath: "/12003/46965/a779714a878714c7120ee6aa6338e079.png",
   },
   {
     icon: HeartHandshake,
@@ -53,13 +58,15 @@ export const FEATURES = [
     description:
       "Đơn giản vì trao đi là nhận lại (ít nhất là nhận lại nụ cười của An).",
     classname: "md:col-span-2",
+    imagepath: "/12003/46976/1b2b4923e7e1fb0eaf994c31d08b5171.png",
   },
   {
     icon: Sprout,
-    title: "Nuôi dưỡng sáng tạo",
+    title: "Đơn giản vì bạn giàu",
     description:
       "Giúp mình có điều kiện tìm tòi và hiện thực hóa những ý tưởng 'điên rồ'.",
     classname: "md:col-span-1",
+    imagepath: "/12003/46979/e6d1145ed8200e23c1b033be302f5334.png",
   },
 ];
 
@@ -68,16 +75,30 @@ export const MARQUEE_ITEMS = [
   "🌱 Nuôi An",
   "💛 Support creativity",
   "🍜 Cơm ngon mỗi ngày",
+  "🎵 Có tiền đi Show",
   "✨ Một miếng khi đói",
-  "🙏 Cảm ơn bạn rất nhiều",
+  "🙏 Thankiu Sô mớt",
   "🚀 Keep on building",
+  "😶‍🌫️ Dream comes true",
+  "🐧 chucmungbandabilua",
 ];
 
-export const STATS = [
-  { value: 128, label: "người ủng hộ", suffix: "+" },
-  { value: 452, label: "cà phê đã nhận", suffix: " ☕" },
-  { value: 99, label: "lời chúc tốt đẹp", suffix: "%" },
+export const NAV_LINKS = [
+  { label: "Về Nuôi An", href: "#about" },
+  { label: "Lý do", href: "#why" },
+  { label: "Hỏi đáp", href: "#faq" },
 ];
+
+export const WHY = {
+  title: "Tại sao lại ủng hộ?",
+  subtitle: "Những lý do hoàn toàn thật lòng (và hơi thực tế).",
+};
+
+// export const STATS = [
+//   { value: 128, label: "người ủng hộ", suffix: "+" },
+//   { value: 452, label: "cà phê đã nhận", suffix: " ☕" },
+//   { value: 99, label: "lời chúc tốt đẹp", suffix: "%" },
+// ];
 
 export const DONATE_SECTION = {
   title: "Ủng hộ An ngay hôm nay",
@@ -88,6 +109,13 @@ export const DONATE_SECTION = {
   ctaButton: "Tạo mã QR 💛",
   helperText: "Quét mã bằng app ngân hàng bất kỳ — hoặc MoMo, ZaloPay",
   defaultText: "Nhập số tiền để tạo mã QR nhé!",
+  subtitle: "Sự tử tế của bạn bắt đầu từ đây.",
+  loadingText: "Đang tạo mã...",
+  successText: "Thankiu Sô mớt 🎉",
+  amountLabel: "Số tiền",
+  bankLabel: "Ngân hàng",
+  notePrefix: "ND:",
+  currency: "đ",
 };
 
 export const LETTER = {
@@ -124,13 +152,24 @@ export const FAQ_DATA = [
   },
 ];
 
+export const FAQ_SECTION = {
+  title: "Câu hỏi thường gặp",
+  subtitle: "Mọi thứ bạn cần biết về Nuôi An.",
+};
+
 export const FOOTER = {
-  tagline: "nuoian.com · Made with 💛 and a lot of ☕",
-  copyright: `© ${new Date().getFullYear()} Nuôi An. All rights reserved.`,
+  tagline: "just a playful project",
+  copyright: `/${new Date().getFullYear()}.`,
   links: [
     { label: "GitHub", href: "https://github.com/b1nhan" },
     { label: "Twitter", href: "https://facebook.com/b1nhan.neh" },
     { label: "Blog", href: "#" },
   ],
   signature: "@b1nhan",
+};
+
+export const FOOTER_BANNER = {
+  title: "Cảm ơn bạn đã ghé thăm 💛",
+  body: "Dù bạn có ủng hộ hay không — việc bạn đến đây đã là điều tuyệt vời rồi.",
+  cta: "Ủng hộ An ngay",
 };

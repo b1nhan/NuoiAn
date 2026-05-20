@@ -10,8 +10,6 @@ import {
   Menu,
   X,
   Github,
-  Twitter,
-  Globe,
   FacebookIcon,
   Instagram,
 } from "lucide-react";
@@ -52,6 +50,9 @@ import {
   type ConfettiRef,
 } from "./components/ui/confetti";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import { BlurFade } from "./components/ui/blur-fade";
+import { TextAnimate } from "./components/ui/text-animate";
+import confetti from "canvas-confetti";
 
 export default function App() {
   const [amount, setAmount] = useState("");
@@ -62,11 +63,26 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [congratulations, setCongratulations] = useState(false);
+  const hasReachedEnd = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      const isAtBottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+
+      if (isAtBottom && !hasReachedEnd.current) {
+        hasReachedEnd.current = true;
+        sideFirework();
+      }
+
+      if (!isAtBottom) {
+        hasReachedEnd.current = false;
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -101,6 +117,32 @@ export default function App() {
     }
   };
 
+  const sideFirework = () => {
+    const end = Date.now() + 3 * 1000; // 3 seconds
+    const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+    const frame = () => {
+      if (Date.now() > end) return;
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 0, y: 0.5 },
+        colors: colors,
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 1, y: 0.5 },
+        colors: colors,
+      });
+      requestAnimationFrame(frame);
+    };
+    frame();
+  };
+
   return (
     <div className="min-h-screen font-sans selection:bg-brand-coral/30">
       {/* Background Decorations */}
@@ -126,24 +168,15 @@ export default function App() {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            <a
-              href="#about"
-              className="text-sm font-medium text-slate-600 hover:text-brand-coral transition-colors"
-            >
-              Về Nuôi An
-            </a>
-            <a
-              href="#why"
-              className="text-sm font-medium text-slate-600 hover:text-brand-coral transition-colors"
-            >
-              Lý do
-            </a>
-            <a
-              href="#faq"
-              className="text-sm font-medium text-slate-600 hover:text-brand-coral transition-colors"
-            >
-              Hỏi đáp
-            </a>
+            {Content.NAV_LINKS.map((link, idx) => (
+              <a
+                key={idx}
+                href={link.href}
+                className="text-sm font-medium text-slate-600 hover:text-brand-coral transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
             <ShimmerButton
               onClick={scrollToDonate}
               className="px-6 h-10 text-sm bg-brand-coral border-none text-white shadow-lg hover:shadow-brand-coral/20"
@@ -171,27 +204,16 @@ export default function App() {
             className="fixed inset-0 z-40 glass pt-24 px-6 md:hidden"
           >
             <div className="flex flex-col gap-6 items-center">
-              <a
-                href="#about"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-xl font-medium"
-              >
-                Về Nuôi An
-              </a>
-              <a
-                href="#why"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-xl font-medium"
-              >
-                Lý do
-              </a>
-              <a
-                href="#faq"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-xl font-medium"
-              >
-                Hỏi đáp
-              </a>
+              {Content.NAV_LINKS.map((link, idx) => (
+                <a
+                  key={idx}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-xl font-medium"
+                >
+                  {link.label}
+                </a>
+              ))}
               <button
                 onClick={() => {
                   scrollToDonate();
@@ -199,7 +221,7 @@ export default function App() {
                 }}
                 className="w-full h-14 rounded-2xl bg-brand-coral text-white font-bold text-lg"
               >
-                Ủng hộ ngay
+                {Content.NAVBAR.cta}
               </button>
             </div>
           </motion.div>
@@ -213,6 +235,7 @@ export default function App() {
           quantity={100}
           className="absolute inset-0"
           color="#ff6a88"
+          size={0.8}
         />
         <InteractiveGridPattern
           className={cn(
@@ -250,11 +273,15 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8"
           >
-            <KineticText
-              class="font-medium cursor-default"
-              text={Content.HERO.heading1}
-            />
-            <AuroraText>{Content.HERO.heading2}</AuroraText>
+            <BlurFade delay={0.25} inView>
+              <KineticText
+                class="font-medium cursor-default"
+                text={Content.HERO.heading1}
+              />
+            </BlurFade>
+            <BlurFade delay={0.25 * 2} inView>
+              <AuroraText>{Content.HERO.heading2}</AuroraText>
+            </BlurFade>
           </motion.h1>
 
           <motion.p
@@ -263,7 +290,9 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            {Content.HERO.subheading}
+            <TextAnimate animation="blurIn" delay={0.5}>
+              {Content.HERO.subheading}
+            </TextAnimate>
           </motion.p>
 
           <motion.div
@@ -343,13 +372,17 @@ export default function App() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 tracking-tight">
-              {Content.ABOUT.title}
+              <TextAnimate animation="slideUp" by="word">
+                {Content.ABOUT.title}
+              </TextAnimate>
             </h2>
-            <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
-              {Content.ABOUT.description.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
-            </div>
+            <BlurFade delay={0.25} inView>
+              <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
+                {Content.ABOUT.description.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </BlurFade>
           </motion.div>
 
           <motion.div
@@ -366,11 +399,10 @@ export default function App() {
                   👨‍💻
                 </div>
                 <h3 className="text-2xl z-10 font-bold text-slate-900 mb-2">
-                  An là ai?
+                  {Content.ABOUT.cardTitle}
                 </h3>
                 <p className="text-slate-600 z-10">
-                  Một con người bằng xương bằng thịt, đang gõ code và mỉm cười
-                  với bạn.
+                  {Content.ABOUT.cardSubtitle}
                 </p>
                 <div className="mt-8 flex gap-3 z-10">
                   <div className="w-8 h-8 rounded-lg glass flex items-center justify-center text-brand-coral border-brand-coral/20 border">
@@ -395,10 +427,14 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight uppercase tracking-[0.1em]">
-              Tại sao lại ủng hộ?
+              <TextAnimate animation="fadeIn" by="line" as="p">
+                {Content.WHY.title}
+              </TextAnimate>
             </h2>
             <p className="text-slate-600 text-lg">
-              Những lý do hoàn toàn thật lòng (và hơi thực tế).
+              <TextAnimate animation="fadeIn" by="line" as="p">
+                {Content.WHY.subtitle}
+              </TextAnimate>
             </p>
           </div>
 
@@ -410,27 +446,31 @@ export default function App() {
                 description={feature.description}
                 Icon={feature.icon}
                 className={feature.classname}
+                imagepath={feature.imagepath}
+                index={idx}
                 background={
-                  <AnimatedGridPattern
-                    numSquares={30}
-                    maxOpacity={0.1}
-                    duration={idx === 1 || idx === 4 ? 0.8 : 1.5}
-                    repeatDelay={1}
-                    squareColor={
-                      idx === 0
-                        ? "orange"
-                        : idx === 2
-                          ? "red"
-                          : idx === 3
-                            ? "amber"
-                            : "yellow"
-                    }
-                    className={cn(
-                      "mask-[radial-gradient(500px_circle_at_center,white,transparent)]",
-                      "inset-x-0 inset-y-[-30%] h-[200%]",
-                      idx === 1 || idx === 4 ? " skew-y-12" : "-skew-y-12",
-                    )}
-                  />
+                  <>
+                    <AnimatedGridPattern
+                      numSquares={30}
+                      maxOpacity={0.1}
+                      duration={idx === 1 || idx === 4 ? 0.8 : 1.5}
+                      repeatDelay={1}
+                      squareColor={
+                        idx === 0
+                          ? "orange"
+                          : idx === 2
+                            ? "red"
+                            : idx === 3
+                              ? "amber"
+                              : "yellow"
+                      }
+                      className={cn(
+                        "mask-[radial-gradient(500px_circle_at_center,white,transparent)]",
+                        "inset-x-0 inset-y-[-30%] h-[200%]",
+                        idx === 1 || idx === 4 ? " skew-y-12" : "-skew-y-12",
+                      )}
+                    />
+                  </>
                 }
               />
             ))}
@@ -439,7 +479,7 @@ export default function App() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-6">
+      {/* <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           {Content.STATS.map((stat, idx) => (
             <motion.div
@@ -457,160 +497,164 @@ export default function App() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Donate Section */}
       <section id="donate" className="py-24 px-6 relative">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight uppercase tracking-[0.1em]">
-              {Content.DONATE_SECTION.title}
-            </h2>
-            <p className="text-slate-600 text-lg">
-              Sự tử tế của bạn bắt đầu từ đây.
-            </p>
-          </div>
-
+          <BlurFade delay={0.25} inView>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight uppercase tracking-[0.1em]">
+                {Content.DONATE_SECTION.title}
+              </h2>
+              <p className="text-slate-600 text-lg">
+                {Content.DONATE_SECTION.subtitle}
+              </p>
+            </div>
+          </BlurFade>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="glass rounded-xl overflow-hidden p-8 md:p-12 shadow-2xl relative border-white/40">
-              <ShineBorder shineColor={["#ff8000", "#FE8FB5", "#FFBE7B"]} />
-              <div className="grid md:grid-cols-2 gap-12 items-start">
-                {/* Inputs */}
-                <div className="space-y-8">
-                  <div className="space-y-3">
-                    <label className="text-sm font-bold text-slate-700 uppercase tracking-wider block ml-2">
-                      {Content.DONATE_SECTION.inputLabel}
-                    </label>
-                    <input
-                      type="number"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder={Content.DONATE_SECTION.inputPlaceholder}
-                      className="w-full h-16 px-6 rounded-2xl bg-white border-2 border-slate-100 focus:border-brand-coral outline-none text-xl font-bold transition-all placeholder:text-slate-300"
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="text-sm font-bold text-slate-700 uppercase tracking-wider block ml-2">
-                      {Content.DONATE_SECTION.noteLabel}
-                    </label>
-                    <textarea
-                      value={note}
-                      onChange={(e) => setNote(e.target.value)}
-                      placeholder={Content.DONATE_SECTION.notePlaceholder}
-                      className="w-full h-32 p-6 rounded-2xl bg-white border-2 border-slate-100 focus:border-brand-coral outline-none text-lg transition-all placeholder:text-slate-300 resize-none"
-                    />
-                  </div>
-                  <ShimmerButton
-                    onClick={handleGenerateQR}
-                    className="w-full h-16 text-xl bg-brand-coral border-none text-white shadow-xl shadow-brand-coral/20"
-                  >
-                    {Content.DONATE_SECTION.ctaButton}
-                  </ShimmerButton>
-                  {congratulations && (
-                    <ConfettiButton className="w-full h-14 rounded-xl text-xl bg-brand-coral border-none text-white shadow-xl">
-                      Thankiu Sô mớt 🎉
-                    </ConfettiButton>
-                  )}
-
-                  <p className="text-center text-sm text-slate-500 flex items-center justify-center gap-2 italic">
-                    {Content.DONATE_SECTION.helperText}
-                  </p>
-                </div>
-
-                {/* QR Display */}
-                <div className="flex flex-col items-center justify-center min-h-[400px] gap-6">
-                  <MagicCard
-                    mode="orb"
-                    glowFrom={"#ff6b6bc4"}
-                    glowTo={"#ff8000cb"}
-                    className="rounded-3xl"
-                  >
-                    <div className="relative w-full aspect-square max-w-[320px] glass rounded-3xl border-slate-200 border-2 overflow-hidden flex items-center justify-center">
-                      {loading ? (
-                        <div className="flex flex-col items-center gap-4">
-                          <div className="w-12 h-12 border-4 border-brand-coral/20 border-t-brand-coral rounded-full animate-spin" />
-                          <p className="text-slate-400 font-medium">
-                            Đang tạo mã...
-                          </p>
-                        </div>
-                      ) : qrUrl ? (
-                        <motion.img
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          src={qrUrl}
-                          alt="VietQR code"
-                          className="w-full h-full object-contain p-4"
-                        />
-                      ) : (
-                        <div className="text-center p-8 space-y-4">
-                          <div className="text-6xl animate-bounce">☕</div>
-                          <p className="text-slate-400 font-medium leading-relaxed">
-                            {Content.DONATE_SECTION.defaultText}
-                          </p>
-                        </div>
-                      )}
+            <BlurFade delay={0.25 * 2} inView>
+              <div className="glass rounded-xl overflow-hidden p-8 md:p-12 shadow-2xl relative border-white/40">
+                <ShineBorder shineColor={["#ff8000", "#FE8FB5", "#FFBE7B"]} />
+                <div className="grid md:grid-cols-2 gap-12 items-start">
+                  {/* Inputs */}
+                  <div className="space-y-8">
+                    <div className="space-y-3">
+                      <label className="text-sm font-bold text-slate-700 uppercase tracking-wider block ml-2">
+                        {Content.DONATE_SECTION.inputLabel}
+                      </label>
+                      <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        placeholder={Content.DONATE_SECTION.inputPlaceholder}
+                        className="w-full h-16 px-6 rounded-2xl bg-white border-2 border-slate-100 focus:border-brand-coral outline-none text-xl font-bold transition-all placeholder:text-slate-300"
+                      />
                     </div>
-                  </MagicCard>
 
-                  {qrUrl && !loading && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="w-full space-y-4"
+                    <div className="space-y-3">
+                      <label className="text-sm font-bold text-slate-700 uppercase tracking-wider block ml-2">
+                        {Content.DONATE_SECTION.noteLabel}
+                      </label>
+                      <textarea
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+                        placeholder={Content.DONATE_SECTION.notePlaceholder}
+                        className="w-full h-32 p-6 rounded-2xl bg-white border-2 border-slate-100 focus:border-brand-coral outline-none text-lg transition-all placeholder:text-slate-300 resize-none"
+                      />
+                    </div>
+                    <ShimmerButton
+                      onClick={handleGenerateQR}
+                      className="w-full h-16 text-xl bg-brand-coral border-none text-white shadow-xl shadow-brand-coral/20"
                     >
-                      <MagicCard
-                        mode="orb"
-                        glowFrom={"#ff6b6bc4"}
-                        glowTo={"#ff8000cb"}
-                        className="rounded-3xl"
+                      {Content.DONATE_SECTION.ctaButton}
+                    </ShimmerButton>
+                    {congratulations && (
+                      <ConfettiButton className="cursor-pointer w-full h-14 rounded-xl text-xl bg-brand-coral border-none text-white shadow-xl">
+                        {Content.DONATE_SECTION.successText}
+                      </ConfettiButton>
+                    )}
+
+                    <p className="text-center text-sm text-slate-500 flex items-center justify-center gap-2 italic">
+                      {Content.DONATE_SECTION.helperText}
+                    </p>
+                  </div>
+
+                  {/* QR Display */}
+                  <div className="flex flex-col items-center justify-center min-h-[400px] gap-6">
+                    <MagicCard
+                      mode="orb"
+                      glowFrom={"#ff6b6bc4"}
+                      glowTo={"#ff8000cb"}
+                      className="rounded-3xl"
+                    >
+                      <div className="relative w-full aspect-square max-w-[320px] glass rounded-3xl border-slate-200 border-2 overflow-hidden flex items-center justify-center">
+                        {loading ? (
+                          <div className="flex flex-col items-center gap-4">
+                            <div className="w-12 h-12 border-4 border-brand-coral/20 border-t-brand-coral rounded-full animate-spin" />
+                            <p className="text-slate-400 font-medium">
+                              {Content.DONATE_SECTION.loadingText}
+                            </p>
+                          </div>
+                        ) : qrUrl ? (
+                          <motion.img
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            src={qrUrl}
+                            alt="VietQR code"
+                            className="w-full h-full object-contain p-4"
+                          />
+                        ) : (
+                          <div className="text-center p-8 space-y-4">
+                            <div className="text-6xl animate-bounce">☕</div>
+                            <p className="text-slate-400 font-medium leading-relaxed">
+                              {Content.DONATE_SECTION.defaultText}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </MagicCard>
+
+                    {qrUrl && !loading && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="w-full space-y-4"
                       >
-                        <div className="glass rounded-xl p-4 flex items-center justify-between border-slate-100 border bg-white">
-                          <div className="space-y-1">
-                            <p className="text-xs font-bold text-slate-400 uppercase">
-                              Số tiền
-                            </p>
-                            <p className="text-xl font-bold text-brand-coral">
-                              {Number(amount).toLocaleString("vi-VN")} đ
-                            </p>
+                        <MagicCard
+                          mode="orb"
+                          glowFrom={"#ff6b6bc4"}
+                          glowTo={"#ff8000cb"}
+                          className="rounded-3xl"
+                        >
+                          <div className="glass rounded-xl p-4 flex items-center justify-between border-slate-100 border bg-white">
+                            <div className="space-y-1">
+                              <p className="text-xs font-bold text-slate-400 uppercase">
+                                {Content.DONATE_SECTION.amountLabel}
+                              </p>
+                              <p className="text-xl font-bold text-brand-coral">
+                                {Number(amount).toLocaleString("vi-VN")}{" "}
+                                {Content.DONATE_SECTION.currency}
+                              </p>
+                            </div>
+                            <div className="space-y-1 text-right">
+                              <p className="text-xs font-bold text-slate-400 uppercase">
+                                {Content.DONATE_SECTION.bankLabel}
+                              </p>
+                              <p className="text-lg font-bold text-slate-700">
+                                {Content.BANK_CONFIG.BANK_ID}
+                              </p>
+                            </div>
                           </div>
-                          <div className="space-y-1 text-right">
-                            <p className="text-xs font-bold text-slate-400 uppercase">
-                              Ngân hàng
-                            </p>
-                            <p className="text-lg font-bold text-slate-700">
-                              {Content.BANK_CONFIG.BANK_ID}
-                            </p>
+                        </MagicCard>
+                        {note && (
+                          <div className="group relative">
+                            <button
+                              onClick={() => copyToClipboard(note)}
+                              className="w-full h-12 rounded-xl border border-slate-100 bg-white flex items-center justify-between px-4 hover:border-brand-coral transition-colors"
+                            >
+                              <span className="text-slate-600 truncate mr-4">
+                                {Content.DONATE_SECTION.notePrefix} {note}
+                              </span>
+                              {copied ? (
+                                <Check className="w-4 h-4 text-green-500" />
+                              ) : (
+                                <Copy className="w-4 h-4 text-slate-400" />
+                              )}
+                            </button>
                           </div>
-                        </div>
-                      </MagicCard>
-                      {note && (
-                        <div className="group relative">
-                          <button
-                            onClick={() => copyToClipboard(note)}
-                            className="w-full h-12 rounded-xl border border-slate-100 bg-white flex items-center justify-between px-4 hover:border-brand-coral transition-colors"
-                          >
-                            <span className="text-slate-600 truncate mr-4">
-                              ND: {note}
-                            </span>
-                            {copied ? (
-                              <Check className="w-4 h-4 text-green-500" />
-                            ) : (
-                              <Copy className="w-4 h-4 text-slate-400" />
-                            )}
-                          </button>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
+                        )}
+                      </motion.div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </BlurFade>
           </motion.div>
         </div>
       </section>
@@ -625,14 +669,34 @@ export default function App() {
         >
           <div className="bg-[#fffdf7] rounded-[2rem] p-10 md:p-16 shadow-xl border border-amber-100 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-brand-coral opacity-20" />
-            <div className="font-serif italic text-xl md:text-2xl text-slate-700 leading-relaxed space-y-6">
-              {Content.LETTER.content.split("\n\n").map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+            <div className="font-serif italic text-xl md:text-2xl text-slate-700 leading-relaxed space-y-6 ">
+              {(() => {
+                const paragraphs = Content.LETTER.content.split("\n\n");
+                const durations = paragraphs.map((p) => 0.02 * p.length);
+                const delays = durations.reduce<number[]>((acc, dur, i) => {
+                  acc.push(i === 0 ? 0 : acc[i - 1] + durations[i - 1]);
+                  return acc;
+                }, []);
+
+                return paragraphs.map((p, i) => (
+                  <p key={i}>
+                    <TextAnimate
+                      animation="blurInUp"
+                      by="word"
+                      duration={durations[i]}
+                      delay={delays[i]}
+                    >
+                      {p}
+                    </TextAnimate>
+                  </p>
+                ));
+              })()}
             </div>
-            <div className="mt-12 font-serif italic text-3xl md:text-4xl text-slate-900 border-t border-amber-100 pt-8">
-              {Content.LETTER.signature}
-            </div>
+            <BlurFade delay={0.25} inView>
+              <div className="mt-12 font-serif italic text-3xl md:text-4xl text-slate-900 border-t border-amber-100 pt-8">
+                {Content.LETTER.signature}
+              </div>
+            </BlurFade>
 
             {/* Subtle paper texture effect */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/old-paper.png')]" />
@@ -645,9 +709,9 @@ export default function App() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
-              Câu hỏi thường gặp
+              {Content.FAQ_SECTION.title}
             </h2>
-            <p className="text-slate-600">Mọi thứ bạn cần biết về Nuôi An.</p>
+            <p className="text-slate-600">{Content.FAQ_SECTION.subtitle}</p>
           </div>
 
           <Accordion type="single" collapsible className="w-full space-y-4">
@@ -671,47 +735,48 @@ export default function App() {
 
       {/* Footer Banner */}
       <section className="px-6 py-12">
-        <div className="max-w-7xl mx-auto">
-          {/* <div className="rounded-[3rem] bg-gradient-to-r from-brand-coral to-brand-peach p-12 md:p-24 text-center text-white relative overflow-hidden shadow-2xl"> */}
-          <div className="rounded-[3rem] bg-gradient-to-r from-brand-coral to-brand-peach">
-            <MagicCard
-              mode="orb"
-              glowFrom={"#ff6b6b7a"}
-              glowTo={"#ff800063"}
-              className="rounded-3xl relative overflow-hidden text-center shadow-2xl py-16 px-8 md:px-24"
-            >
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-[-20%] left-[-10%] w-64 h-64 bg-white rounded-full blur-3xl" />
-                <div className="absolute bottom-[-20%] right-[-10%] w-96 h-96 bg-white rounded-full blur-3xl" />
-              </div>
+        <BlurFade delay={0.5} inView>
+          <div className="max-w-7xl mx-auto">
+            {/* <div className="rounded-[3rem] bg-gradient-to-r from-brand-coral to-brand-peach p-12 md:p-24 text-center text-white relative overflow-hidden shadow-2xl"> */}
+            <div className="rounded-[3rem] bg-gradient-to-r from-brand-coral to-brand-peach">
+              <MagicCard
+                mode="orb"
+                glowFrom={"#ff6b6b7a"}
+                glowTo={"#ff800063"}
+                className="rounded-3xl relative overflow-hidden text-center shadow-2xl py-16 px-8 md:px-24"
+              >
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-[-20%] left-[-10%] w-64 h-64 bg-white rounded-full blur-3xl" />
+                  <div className="absolute bottom-[-20%] right-[-10%] w-96 h-96 bg-white rounded-full blur-3xl" />
+                </div>
 
-              <div className="relative z-10">
-                <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-coral to-brand-peach  mb-6">
-                  Cảm ơn bạn đã ghé thăm 💛
-                </h2>
-                <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-2xl mx-auto leading-relaxed">
-                  Dù bạn có ủng hộ hay không — việc bạn đến đây đã là điều tuyệt
-                  vời rồi.
-                </p>
-                <button
-                  onClick={scrollToDonate}
-                  className="inline-flex cursor-pointer items-center justify-center h-16 px-12 rounded-2xl bg-white text-brand-coral text-xl font-bold hover:scale-105 transition-transform shadow-xl"
-                >
-                  Ủng hộ An ngay
-                </button>
-              </div>
-            </MagicCard>
+                <div className="relative z-10">
+                  <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-coral to-brand-peach  mb-6">
+                    {Content.FOOTER_BANNER.title}
+                  </h2>
+                  <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-2xl mx-auto leading-relaxed">
+                    {Content.FOOTER_BANNER.body}
+                  </p>
+                  <button
+                    onClick={scrollToDonate}
+                    className="inline-flex cursor-pointer items-center justify-center h-16 px-12 rounded-2xl bg-white text-brand-coral text-xl font-bold hover:scale-105 transition-transform shadow-xl"
+                  >
+                    {Content.FOOTER_BANNER.cta}
+                  </button>
+                </div>
+              </MagicCard>
+            </div>
           </div>
-        </div>
+        </BlurFade>
       </section>
 
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-slate-100">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-center md:text-left space-y-2">
-            <p className="text-xl font-bold gradient-text">
+            <a href="#" className="my-2 text-xl font-bold gradient-text">
               {Content.NAVBAR.logo}
-            </p>
+            </a>
             <p className="text-slate-400 font-medium">
               {Content.FOOTER.tagline}
             </p>
