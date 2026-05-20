@@ -12,6 +12,7 @@ import {
   Github,
   FacebookIcon,
   Instagram,
+  Sprout,
 } from "lucide-react";
 import { cn } from "./lib/utils";
 import * as Content from "./content";
@@ -271,16 +272,18 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8"
+            className="text-center tracking-tight mb-8 flex flex-col items-center"
           >
             <BlurFade delay={0.25} inView>
               <KineticText
-                class="font-medium cursor-default"
+                className="text-3xl text-center md:text-7xl font-normal cursor-default"
                 text={Content.HERO.heading1}
               />
             </BlurFade>
             <BlurFade delay={0.25 * 2} inView>
-              <AuroraText>{Content.HERO.heading2}</AuroraText>
+              <AuroraText className="my-1 md:my-2 font-extrabold text-3xl md:text-7xl text-center">
+                {Content.HERO.heading2}
+              </AuroraText>
             </BlurFade>
           </motion.h1>
 
@@ -316,7 +319,8 @@ export default function App() {
               className="w-full sm:w-auto h-14 px-10 text-lg font-medium text-slate-600 hover:text-brand-coral transition-colors flex items-center justify-center gap-2"
             >
               {Content.HERO.ctaSecondary}
-              <ChevronRight className="w-5 h-5" />
+              <Sprout className="w-5 h-5" />
+              <ChevronRight className="ml-1 w-5 h-5" />
             </button>
           </motion.div>
         </div>
@@ -396,7 +400,19 @@ export default function App() {
               <div className="absolute inset-0 -rotate-6 rounded-3xl bg-brand-peach/10 border-2 border-dashed border-brand-coral" />
               <div className="absolute inset-0 glass rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-2xl">
                 <div className="w-40 h-40 z-10 bg-gradient-to-tr from-brand-peach to-brand-coral rounded-full flex items-center justify-center text-8xl mb-8 shadow-xl">
-                  👨‍💻
+                  <div className="relative">
+                    {/* Ảnh gốc không blend */}
+                    <img
+                      src="/b1nhan.png"
+                      className="w-25 h-25 object-contain"
+                    />
+                    <div className="absolute inset-0 opacity-100">
+                      <img
+                        src="/b1nhan.png"
+                        className="w-25 h-25 object-contain mix-blend-screen"
+                      />
+                    </div>
+                  </div>
                 </div>
                 <h3 className="text-2xl z-10 font-bold text-slate-900 mb-2">
                   {Content.ABOUT.cardTitle}
@@ -754,8 +770,11 @@ export default function App() {
                   <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-coral to-brand-peach  mb-6">
                     {Content.FOOTER_BANNER.title}
                   </h2>
-                  <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-2xl mx-auto leading-relaxed">
+                  <p className="text-xl md:text-2xl opacity-90 mb-3 max-w-2xl mx-auto leading-relaxed">
                     {Content.FOOTER_BANNER.body}
+                  </p>
+                  <p className="text-md md:text-lg italic mb-12 opacity-50 font-light max-w-2xl mx-auto leading-relaxed">
+                    {Content.FOOTER_BANNER.sub}
                   </p>
                   <button
                     onClick={scrollToDonate}

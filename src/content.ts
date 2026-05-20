@@ -1,5 +1,4 @@
-import { sign } from "crypto";
-import { Soup, Coffee, HeartHandshake, Sprout } from "lucide-react";
+import { Soup, Sparkles, HeartHandshake, Sprout } from "lucide-react";
 
 export const BANK_CONFIG = {
   BANK_ID: "MB", // [PLACEHOLDER - MB is Military Bank]
@@ -10,29 +9,29 @@ export const BANK_CONFIG = {
 
 export const NAVBAR = {
   logo: "Nuôi An 🌱",
-  cta: "Ủng hộ ngay",
+  cta: "Rót vốn ngay",
 };
 
 export const HERO = {
   badge: "✨ Playground - just a playful project",
-  heading1: "Nuôi An — Dự án nuôi sống",
-  heading2: "một con người",
+  heading1: "Nuôi An — Dự án tiếp sức",
+  heading2: "một tâm hồn",
   subheading:
-    "An là một người đang cố gắng làm những thứ hay ho trên đời. Nếu bạn thấy An hữu ích — hoặc chỉ đơn giản là tử tế — hãy mua cho An một ly cà phê ☕",
-  ctaPrimary: "Ủng hộ ngay 💛",
-  ctaSecondary: "Tìm hiểu thêm",
+    "An là một dự án chạy bằng cơm đang được vận hành với mục tiêu làm những thứ hay ho trên đời. Nếu bạn thấy dự án này hữu ích và có tiềm năng phát triển hoặc đơn giản là thấy An tử tế — hãy mạnh dạn đầu tư cho An một tô cơm :D",
+  ctaPrimary: "Đầu tư ngay 💛",
+  ctaSecondary: "Xem thêm đã",
 };
 
 export const ABOUT = {
   title: "Nuôi An là gì?",
   description: [
-    "Chào bạn! Mình là An. Nuôi An là một dự án cá nhân mang tính 'vui là chính, cơm gạo là mười'. Cái tên này đơn giản là một lối chơi chữ: 'Nuôi' (nuôi nấng) + 'An' (tên mình).",
-    "Thú thực, mình không bán khóa học, không bán sản phẩm, và cũng không gửi tin nhắn spam. Mình chỉ đang cố gắng xây dựng những thứ nhỏ bé nhưng tử tế cho thế giới này (hoặc ít nhất là cho mình).",
-    "Nếu bạn cảm thấy những gì mình làm có chút giá trị, hoặc đơn giản là muốn thấy một con người được no bụng để tiếp tục gõ code, bạn có thể 'nuôi' mình bằng một ly cà phê. Không ép buộc, không áp lực, chỉ có lòng biết ơn vô hạn và những lời chúc tốt lành nhất gửi đến bạn.",
+    "Chào các nhà đầu tư thiên thần! 'Nuôi An' là một dự án cá nhân mang tính chất 'gọi vốn chống đói'. Cái tên nói lên tất cả: Bạn nuôi An, An cảm ơn.",
+    "Dự án này hoạt động hoàn toàn phi lợi nhuận (bởi vì tiền vào là người nhận tiêu hết). An sẽ rất vui khi được bạn 'rót vốn'. Toàn bộ ngân sách sẽ được An giải ngân vào đồ ăn vặt, vé đi show, mua Monster nạp năng lượng chạy deadline, và rất cũng có thể là... bao bạn đi ăn hehe.",
+    "Nếu bạn thấy vui, hoặc tình cờ đang dư dả, hãy 'rót vốn' vào dự án này. Không ép buộc, không áp KPI, lợi tức duy nhất bạn nhận được là sự cảm kích từ một chiếc bụng no và niềm vui của An.",
   ],
   cardTitle: "An là ai?",
   cardSubtitle:
-    "Một con người bằng xương bằng thịt, đang gõ code và mỉm cười với bạn.",
+    "Một nhân tố bí ẩn nào đó, đang ngồi chờ ting ting từ bạn và tiếp tục tỏ ra là mình có ích.",
 };
 
 export const FEATURES = [
@@ -40,15 +39,15 @@ export const FEATURES = [
     icon: Soup,
     title: "Mua cơm cho An",
     description:
-      "Năng lượng vàng để An tiếp tục duy trì sự sống và sự tỉnh táo.",
+      "Năng lượng để duy trì sự sống và giữ cho server An không bị sập.",
     classname: "md:col-span-1",
     imagepath: "/12003/46977/738dc18d9f436d0a5502d5c55af70195.png",
   },
   {
-    icon: Coffee,
-    title: "1 Coffee = 1 Giờ Code",
+    icon: Sparkles,
+    title: "Tài trợ vé đi Show",
     description:
-      "Tăng tốc độ xử lý bug và ra mắt các tính năng mới nhanh hơn 300%.",
+      "Năng suất của An tỉ lệ thuận với mức độ thỏa mãn nhu cầu giải trí. Chút kinh phí đi show âm nhạc, chơi game, hay hang out cùng gang t sẽ giúp An reset não và x3 tốc độ xử lý công việc.",
     classname: "md:col-span-2",
     imagepath: "/12003/46965/a779714a878714c7120ee6aa6338e079.png",
   },
@@ -56,7 +55,7 @@ export const FEATURES = [
     icon: HeartHandshake,
     title: "Vì bạn là người tốt",
     description:
-      "Đơn giản vì trao đi là nhận lại (ít nhất là nhận lại nụ cười của An).",
+      "An sẽ giúp bạn tích đức thông qua những hành động tiêu tiền tốt đẹp. Đơn giản vì trao đi là nhận lại (nụ cười của An).",
     classname: "md:col-span-2",
     imagepath: "/12003/46976/1b2b4923e7e1fb0eaf994c31d08b5171.png",
   },
@@ -64,18 +63,19 @@ export const FEATURES = [
     icon: Sprout,
     title: "Đơn giản vì bạn giàu",
     description:
-      "Giúp mình có điều kiện tìm tòi và hiện thực hóa những ý tưởng 'điên rồ'.",
+      "Một trong những cơ hội để bạn tiêu tiền đúng chỗ. Hãy để tiền của bạn làm việc có ích!",
     classname: "md:col-span-1",
     imagepath: "/12003/46979/e6d1145ed8200e23c1b033be302f5334.png",
   },
 ];
 
 export const MARQUEE_ITEMS = [
-  "☕ Buy An a coffee",
+  "👾 Buy An a 'Monster'",
   "🌱 Nuôi An",
   "💛 Support creativity",
-  "🍜 Cơm ngon mỗi ngày",
-  "🎵 Có tiền đi Show",
+  "😋 Cơm ngon mỗi ngày",
+  "🎵 Góp tiền đi Show",
+  "🍜 Tặng An tô mỳ",
   "✨ Một miếng khi đói",
   "🙏 Thankiu Sô mớt",
   "🚀 Keep on building",
@@ -85,13 +85,13 @@ export const MARQUEE_ITEMS = [
 
 export const NAV_LINKS = [
   { label: "Về Nuôi An", href: "#about" },
-  { label: "Lý do", href: "#why" },
-  { label: "Hỏi đáp", href: "#faq" },
+  { label: "Lý do nên đầu tư", href: "#why" },
+  { label: "Hỏi xoáy đáp xoay", href: "#faq" },
 ];
 
 export const WHY = {
-  title: "Tại sao lại ủng hộ?",
-  subtitle: "Những lý do hoàn toàn thật lòng (và hơi thực tế).",
+  title: "Tại sao nên đầu tư?",
+  subtitle: "Những lý do vô cùng thuyết phục (hoặc không).",
 };
 
 // export const STATS = [
@@ -101,15 +101,15 @@ export const WHY = {
 // ];
 
 export const DONATE_SECTION = {
-  title: "Ủng hộ An ngay hôm nay",
-  inputLabel: "Nhập số tiền bạn muốn ủng hộ (VNĐ)",
+  title: "Rót vốn cho An ngay hôm nay",
+  inputLabel: "Nhập số tiền bạn muốn đầu tư (VNĐ)",
   inputPlaceholder: "vd: 50000",
-  noteLabel: "Lời nhắn (không bắt buộc)",
-  notePlaceholder: "Cố lên nhé An!",
-  ctaButton: "Tạo mã QR 💛",
+  noteLabel: "Lời nhắn (Optional)",
+  notePlaceholder: "Cầm lấy và tiêu hết trong hôm nay cho tôi!",
+  ctaButton: "Tạo mã QR",
   helperText: "Quét mã bằng app ngân hàng bất kỳ — hoặc MoMo, ZaloPay",
   defaultText: "Nhập số tiền để tạo mã QR nhé!",
-  subtitle: "Sự tử tế của bạn bắt đầu từ đây.",
+  subtitle: "Bắt đầu tích đức.",
   loadingText: "Đang tạo mã...",
   successText: "Thankiu Sô mớt 🎉",
   amountLabel: "Số tiền",
@@ -120,41 +120,40 @@ export const DONATE_SECTION = {
 
 export const LETTER = {
   content:
-    "Gửi bạn, một người lạ (hoặc quen) đầy tử tế.\n\nMình tin rằng trên đời này vẫn còn rất nhiều sự kết nối đẹp đẽ dù chúng ta chưa từng gặp mặt. 'Nuôi An' không phải là một lời kêu cứu, mà là một lời mời gọi đồng hành. Cảm ơn bạn vì đã ghé qua, đã đọc, và đã dành tâm sức để hiểu về một dự án nhỏ bé này.\n\nDù bạn chọn ủng hộ bằng vật chất hay chỉ đơn giản là một lời cổ vũ thầm lặng, mình đều cảm kích như nhau. Chúc bạn luôn bình an, rực rỡ và có thật nhiều 'cơm ngon' trong hành trình của chính mình.",
-  signature: "— An 🌱",
+    "Gửi bạn, một người quen (hoặc lạ) đầy tử tế và cũng là một nhà đầu tư thiên thần (tiềm năng),\n\n Mình tin rằng sự kết nối đưa chúng ta đến đây là một điều rất đẹp đẽ. Cảm ơn bạn đã nán lại xem qua cáo của dự án 'Nuôi An'. Đây không hẳn là một lời kêu cứu, chỉ là một lời mời vui vẻ. \n\nDù bạn chọn rót vốn bằng hiện kim hay bằng những lời cổ vũ tinh thần thầm lặng, mình đều rất trân trọng. Chúc bạn luôn rực rỡ, bình an, chân cứng đá mềm đi qua những thử thách và có thật nhiều 'cơm ngon' trong hành trình của mình.",
+  signature: "— Bình An 🌱",
 };
 
 export const FAQ_DATA = [
   {
     question: "Tiền ủng hộ sẽ dùng để làm gì?",
     answer:
-      "Phần lớn sẽ dùng để mua cơm, cà phê và thanh toán các hóa đơn dịch vụ (hosting, API...) giúp mình duy trì các dự án nhỏ. Một phần nhỏ sẽ được để dành để nâng cấp thiết bị làm việc.",
+      "Phần lớn ngân sách sẽ được giải ngân ngay lập tức (có thể là vào đồ ăn), phần còn lại sẽ được An cất ví để dành.",
   },
   {
     question: "Tôi có nhận được gì không?",
     answer:
-      "Ngoài lòng biết ơn sâu sắc và lời chúc vạn sự như ý, bạn sẽ nhận được niềm vui vì đã giúp một người trẻ bớt lo toan hơn trong cuộc sống. Thỉnh thoảng mình sẽ gửi cập nhật về những gì mình làm được nhờ sự hỗ trợ của bạn.",
+      "Tích đức online. Ngoài ra, bạn sẽ nhận được niềm vui thanh cao khi biết mình vừa cứu đói một người. Mình không hứa sẽ chia cổ tức, nhưng hứa sẽ không mua đồ bậy bạ.",
   },
   {
     question: "An là ai vậy?",
     answer:
-      "Mình là một người bình thường thích làm những thứ không bình thường. Một coder, một mộng mơ gia, và hiện tại là một người đang cần bạn 'nuôi' (theo đúng nghĩa đen của trang web này).",
+      "Mình là một người tham vọng, hay mộng mơ, sở hữu rất nhiều dự án (sắp ra mắt), ý tưởng. Hiện tại đang rất sẵn lòng nhận được sự tài trợ của bạn.",
   },
   {
-    question: "Tôi có thể ủng hộ bao nhiêu?",
-    answer:
-      "Bao nhiêu cũng quý! 10k, 20k cũng đủ để mình thấy được khích lệ rất nhiều. Không có khoản đóng góp nào là quá nhỏ khi nó đi kèm với sự tử tế.",
+    question: "Tôi có thể đầu tư bao nhiêu?",
+    answer: "Bao nhiêu cũng bú!",
   },
   {
-    question: "Nuôi An có hợp pháp không? 😄",
+    question: "Nuôi An có hợp pháp không?",
     answer:
-      "Hoàn toàn hợp pháp! Đây là một hình thức donation/crowdfunding cá nhân tự nguyện. Mình không cam kết trả lại lợi nhuận, nhưng cam kết sẽ không lãng phí niềm tin của bạn.",
+      "Hoàn toàn hợp pháp! Công an sẽ không bắt bạn vì tội tích đức online đâu. Bạn cứ yên tâm công tác nhé.",
   },
 ];
 
 export const FAQ_SECTION = {
   title: "Câu hỏi thường gặp",
-  subtitle: "Mọi thứ bạn cần biết về Nuôi An.",
+  subtitle: "Cẩm nang giải ngố về Nuôi An.",
 };
 
 export const FOOTER = {
@@ -170,6 +169,7 @@ export const FOOTER = {
 
 export const FOOTER_BANNER = {
   title: "Cảm ơn bạn đã ghé thăm 💛",
-  body: "Dù bạn có ủng hộ hay không — việc bạn đến đây đã là điều tuyệt vời rồi.",
-  cta: "Ủng hộ An ngay",
+  body: "Dù bạn có donate hay không — việc bạn đến đây đã là điều tuyệt vời rồi.",
+  sub: "Tất nhiên, nếu có donate thì mình sẽ cảm ơn to hơn một chút.",
+  cta: "Rót vốn ngay",
 };
