@@ -40,7 +40,7 @@ export function Marquee({
             className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
               "animate-marquee flex-row": !vertical,
               "animate-marquee-vertical flex-col": vertical,
-              "reverse": reverse, // handle via CSS or manual logic if needed, simplify for now
+              reverse: reverse, // handle via CSS or manual logic if needed, simplify for now
               "group-hover:[animation-play-state:paused]": pauseOnHover,
             })}
             style={{
@@ -62,8 +62,8 @@ export function ShimmerButton({
   return (
     <button
       className={cn(
-        "relative flex h-12 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-8 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50",
-        className
+        "relative flex h-12 animate-shimmer items-center cursor-pointer justify-center rounded-2xl border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-8 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50",
+        className,
       )}
       {...props}
     >
@@ -165,7 +165,7 @@ export function NumberTicker({
       const end = value;
       const duration = 2000;
       const increment = end / (duration / 16);
-      
+
       const timer = setInterval(() => {
         start += increment;
         if (start >= end) {
@@ -272,7 +272,11 @@ export function Particles({
 
   function hexToRgb(hex: string): number[] {
     hex = hex.replace("#", "");
-    if (hex.length === 3) hex = hex.split("").map((char) => char + char).join("");
+    if (hex.length === 3)
+      hex = hex
+        .split("")
+        .map((char) => char + char)
+        .join("");
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
@@ -304,7 +308,12 @@ export function Particles({
 
   const animate = () => {
     if (context.current) {
-      context.current.clearRect(0, 0, canvasSize.current.w, canvasSize.current.h);
+      context.current.clearRect(
+        0,
+        0,
+        canvasSize.current.w,
+        canvasSize.current.h,
+      );
       circles.current.forEach((circle: any, i: number) => {
         // Handle transparency
         const edge = [
@@ -314,7 +323,9 @@ export function Particles({
           canvasSize.current.h - circle.y - circle.translateY - circle.size, // bottom
         ];
         const closestEdge = edge.reduce((a, b) => Math.min(a, b));
-        const remapClosestEdge = parseFloat(remapValue(closestEdge, 0, 20, 0, 1).toFixed(2));
+        const remapClosestEdge = parseFloat(
+          remapValue(closestEdge, 0, 20, 0, 1).toFixed(2),
+        );
         if (remapClosestEdge > 1) {
           circle.alpha += 0.02;
           if (circle.alpha > circle.targetAlpha) {
@@ -326,9 +337,13 @@ export function Particles({
         circle.x += circle.dx + vx;
         circle.y += circle.dy + vy;
         circle.translateX +=
-          (mouse.current.x / (staticity / circle.magnetism) - circle.translateX) / ease;
+          (mouse.current.x / (staticity / circle.magnetism) -
+            circle.translateX) /
+          ease;
         circle.translateY +=
-          (mouse.current.y / (staticity / circle.magnetism) - circle.translateY) / ease;
+          (mouse.current.y / (staticity / circle.magnetism) -
+            circle.translateY) /
+          ease;
 
         drawCircle(circle, true);
 
@@ -361,7 +376,11 @@ export function Particles({
   };
 
   return (
-    <div className={cn("absolute inset-0", className)} ref={containerRef} aria-hidden="true">
+    <div
+      className={cn("absolute inset-0", className)}
+      ref={containerRef}
+      aria-hidden="true"
+    >
       <canvas ref={canvasRef} />
     </div>
   );
@@ -375,7 +394,12 @@ export function BentoGrid({
   children?: React.ReactNode;
 }) {
   return (
-    <div className={cn("grid w-full auto-rows-[22rem] grid-cols-1 gap-4 md:grid-cols-3", className)}>
+    <div
+      className={cn(
+        "grid w-full auto-rows-[22rem] grid-cols-1 gap-4 md:grid-cols-3",
+        className,
+      )}
+    >
       {children}
     </div>
   );
